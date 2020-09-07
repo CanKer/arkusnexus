@@ -12,10 +12,11 @@ import { tap, map, catchError } from 'rxjs/operators'
   providedIn: 'root'
 })
 export class AuthService {
-  private url = environment
+  private url = environment.baseUrl
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) {
+    console.log(environment.name)
   }
 
   register(user: User) {
