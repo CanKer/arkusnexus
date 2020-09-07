@@ -1,0 +1,23 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-content>
+    <form #form="ngForm" class="addTODO"  (ngSubmit)="onSubmit()">
+      <h2>Add ToDo</h2>
+
+      <mat-form-field class="full-width-input">
+        <input
+            [(ngModel)]="description"
+            name="description"
+            matInput
+            placeholder="Description"
+            minlength="3"
+            required
+            >
+        <mat-error *ngIf="form.controls.description?.errors?.minlength">
+          Please provide a valid description, minimum 3 characters
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="form.invalid">Add</button>
+
+    </form>
+  </mat-card-content>
+</mat-card>
