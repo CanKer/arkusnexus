@@ -16,7 +16,7 @@ export class AuthService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) {
-    console.log(environment.name)
+    console.log("AuthService: ", environment.name)
   }
 
   register(user: User) {

@@ -9,7 +9,9 @@ import { environment } from './../../environments/environment'
 })
 export class TodoService {
   private url = environment.baseUrl
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) {
+    console.log("TodoService: ", environment.name)
+  }
 
   getAll()  {
     return this.http.get(`${this.url}todo`)
