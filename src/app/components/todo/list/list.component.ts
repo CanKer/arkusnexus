@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TodoService } from './../../../services/todo.service'
 import { TODO } from './../../../classes/TODO'
 
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { SnackService } from './../../../services/snack.service'
 
 import { BehaviorSubject } from 'rxjs'
 
@@ -17,7 +17,7 @@ export class ListComponent implements OnInit {
   dataSource$: BehaviorSubject<TODO[]> = new BehaviorSubject<TODO[]>([])
   displayedColumns: string[] = ['_id', 'done', 'description', 'actions'];
 
-  constructor(private todoService: TodoService, private _snackBar: MatSnackBar,) {}
+  constructor(private todoService: TodoService, private snack: SnackService) {}
 
   ngOnInit(): void {
     this.getTODOList()
@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
         const newValues = this.dataSource$.value.filter(v => (v._id !== element._id))
         this.dataSource$.next(newValues)
         },
-        (error: any) => (console.log("ERROR: ", error), this.openSnackBar(error.name, error.statusText)),
+        (error: any) => (console.log("ERROR: ", error), this.snack.openSnackBar(error.name, error.statusText)),
       )
 
   }
@@ -41,7 +41,7 @@ export class ListComponent implements OnInit {
     this.todoService.getAll()
       .subscribe(
         (data:TODO[]) => this.dataSource$.next(data) ,
-        error => (console.log("ERROR: ", error), this.openSnackBar(error.name, error.statusText)),
+        error => (console.log("ERROR: ", error), this.snack.openSnackBar(error.name, error.statusText)),
       )
   }
 
@@ -49,10 +49,5 @@ export class ListComponent implements OnInit {
 
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 5000,
-    });
-  }
 
 }

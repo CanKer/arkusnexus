@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   name: "DEV",
-  baseUrl: `http://localhost:9000/api/v1/`
+  //baseUrl: `http://localhost:9000/api/v1/`
+  baseUrl: `https://todo-app-prod-server.herokuapp.com/api/v1/`
 };
 
 /*

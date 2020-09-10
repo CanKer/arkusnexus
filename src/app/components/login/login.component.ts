@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router'
-import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 import { User } from './../../classes/User'
 import { AuthService } from './../../services/auth.service'
+import { SnackService } from './../../services/snack.service'
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
       private auth: AuthService,
-      private _snackBar: MatSnackBar,
+      private snack: SnackService,
       private router: Router
     ) {}
 
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', token)
           this.router.navigate(['todo'])
         },
-        error => (console.log("error: ", error),this.openSnackBar(error.name, error.statusText)),
+        error => (console.log("error: ", error),this.snack.openSnackBar(error.name, error.statusText)),
         () => console.log("yei")
       )
     }
@@ -77,14 +77,10 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', token)
           this.router.navigate(['todo'])
         },
-        ({name,statusText}:any) => (console.log("error: ", name),this.openSnackBar(name, statusText)),
+        ({name,statusText}:any) => (console.log("error: ", name),this.snack.openSnackBar(name, statusText)),
         () => console.log("finally kurwa!!")
       )
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 5000,
-    });
-  }
+
 }
