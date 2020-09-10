@@ -26,11 +26,13 @@ export class ListComponent implements OnInit {
   delete(element:TODO) {
     const {_id, description, done } = element
     const todo = new TODO(_id, done, description, this.todoService)
+
     todo.remove()
       .subscribe(
         () => {
         const newValues = this.dataSource$.value.filter(v => (v._id !== element._id))
         this.dataSource$.next(newValues)
+        this.snack.openSnackBar("Deleted", "Success")
         },
         (error: any) => (console.log("ERROR: ", error), this.snack.openSnackBar(error.name, error.statusText)),
       )
@@ -40,7 +42,7 @@ export class ListComponent implements OnInit {
   getTODOList() {
     this.todoService.getAll()
       .subscribe(
-        (data:TODO[]) => this.dataSource$.next(data) ,
+        (data:TODO[]) => (this.dataSource$.next(data)) ,
         error => (console.log("ERROR: ", error), this.snack.openSnackBar(error.name, error.statusText)),
       )
   }
